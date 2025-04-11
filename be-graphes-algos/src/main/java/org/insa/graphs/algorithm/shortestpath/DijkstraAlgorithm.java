@@ -1,10 +1,10 @@
 package org.insa.graphs.algorithm.shortestpath;
 
-import java.lang.reflect.Array;
-import java.util.function.IntBinaryOperator;
-
-import org.insa.graphs.model.Node;
+import org.insa.graphs.algorithm.AbstractSolution.Status;
+import org.insa.graphs.model.Arc;
+import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Label;
+import org.insa.graphs.model.Node;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
@@ -31,24 +31,33 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             index++;
         }
         tabLabels[0].setCoutRealise(0);
-
-        for (index=0; index<data.getGraph().size(); index++){
+        index = 0;
+        boolean foundDest = false;
+        while (index<data.getGraph().size() && !foundDest){
             //Chercher min
-            int min=Integer.MAX_VALUE;
-            int labelMin;
+            float min=Float.MAX_VALUE;
+            int labelMin = -1;
             for (int j=0; j<data.getGraph().size(); j++){
                 if (tabLabels[j].getCoutRealise()<min && !(tabLabels[j].getMarque())){
                     labelMin=j;
                     min=tabLabels[j].getCoutRealise();
                 }
             }
-            //Mettre a jour le tableau en iterrant sur les arc
-            for (){
-                tabLabels[h].getCoutRealise()=min(tabLabels[j].getCoutRealise(),tabLabels[labelMin].getCoutRealise()+);
+            //on ajoute le minimum comme point visité
+            tabLabels[labelMin].setMarque(true);
+            if (labelMin == data.getDestination().getId()){
+                foundDest = true;
             }
+            //Mettre a jour le tableau en iterrant sur les arc
+            for (Arc a : tabLabels[labelMin].getSommetCourant().getSuccessors()){
+                tabLabels[a.getDestination().getId()].setCoutRealise(Float.min(tabLabels[a.getDestination().getId()].getCoutRealise(),tabLabels[labelMin].getCoutRealise()+a.getLength()));
+            }
+            index ++;
         }
-    
-
+        // CONTINUER AU PROCHAIN TP CRER LISTE DE NOUED
+        Graph grapheret = new Graph(null, null, null, null)
+        ShortestPathData dataret = new ShortestPathData(grapheret, data.getOrigin(), data.getDestination(), null)
+        ShortestPathSolution solution = new ShortestPathSolution(,Status.OPTIMAL);
 
 
         // when the algorithm terminates, return the solution that has been found
