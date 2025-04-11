@@ -58,25 +58,20 @@ public class Launch {
         try (final GraphReader reader = new BinaryGraphReader(new DataInputStream(
                 new BufferedInputStream(new FileInputStream(mapName))))) {
 
-            // TODO: read the graph
             graph = reader.read();
         }
 
         // create the drawing
         final Drawing drawing = createDrawing();
 
-        // TODO: draw the graph on the drawing
 
         drawing.drawGraph(graph);
 
-        // TODO: create a path reader
         try (final PathReader pathReader = new BinaryPathReader(new DataInputStream(new BufferedInputStream(new FileInputStream(pathName))))) {
 
-            // TODO: read the path
             path = pathReader.readPath(graph);
         }
 
-        // TODO: draw the path on the drawing
 
         drawing.drawPath(path);
     }
