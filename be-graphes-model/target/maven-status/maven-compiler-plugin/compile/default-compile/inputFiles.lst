@@ -1,23 +1,23 @@
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/Node.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/RoadInformation.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BinaryGraphReader.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/ArcBackward.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BinaryWriter.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/PathWriter.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/Path.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/ArcForward.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/AccessRestrictions.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/PathReader.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/MapMismatchException.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BinaryPathWriter.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/GraphReader.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/Point.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BadFormatException.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/GraphStatistics.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BadMagicNumberException.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BadVersionException.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BinaryReader.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/GraphReaderObserver.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/Graph.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/Arc.java
-/home/chauv/Bureau/3MIC/Graphe/BE_graphe/be-graphes-model/src/main/java/org/insa/graphs/model/io/BinaryPathReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BinaryGraphReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\Node.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BinaryWriter.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BadFormatException.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\MapMismatchException.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BinaryPathReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BinaryReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\Arc.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\GraphReaderObserver.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BinaryPathWriter.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\GraphStatistics.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\Graph.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BadMagicNumberException.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\RoadInformation.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\PathReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\GraphReader.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\ArcForward.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\Point.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\Path.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\ArcBackward.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\BadVersionException.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\io\PathWriter.java
+C:\Users\thaoh\Desktop\INSA\INSA 3A\BE Graphes\BE_graphe\be-graphes-model\src\main\java\org\insa\graphs\model\AccessRestrictions.java
