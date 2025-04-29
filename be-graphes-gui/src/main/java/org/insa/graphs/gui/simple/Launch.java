@@ -9,6 +9,10 @@ import java.io.FileInputStream;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
 import org.insa.graphs.gui.drawing.Drawing;
 import org.insa.graphs.gui.drawing.components.BasicDrawing;
 import org.insa.graphs.model.Graph;
@@ -47,9 +51,9 @@ public class Launch {
 
         // visit these directory to see the list of available files on commetud.
         final String mapName =
-                "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
+                "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre.mapgr";
         final String pathName =
-                "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
+                "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/carre.path";
 
         final Graph graph;
         final Path path;
@@ -66,12 +70,17 @@ public class Launch {
 
 
         drawing.drawGraph(graph);
-
+        
         try (final PathReader pathReader = new BinaryPathReader(new DataInputStream(new BufferedInputStream(new FileInputStream(pathName))))) {
 
             path = pathReader.readPath(graph);
         }
-
+        
+/*
+        DijkstraAlgorithm dij_path = new ShortestPathAlgorithm();
+        ShortestPathSolution shortPath = dij_path.doRun();
+        path = shortPath.getPath();
+*/
 
         drawing.drawPath(path);
     }

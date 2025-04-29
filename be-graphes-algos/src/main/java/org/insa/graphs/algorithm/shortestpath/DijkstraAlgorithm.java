@@ -1,10 +1,12 @@
 package org.insa.graphs.algorithm.shortestpath;
 
+import java.util.ArrayList;
+
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.model.Arc;
-import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Label;
 import org.insa.graphs.model.Node;
+import org.insa.graphs.model.Path;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
@@ -30,7 +32,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             tabLabels[index]=new Label(N,false,Integer.MAX_VALUE, null);
             index++;
         }
-        tabLabels[0].setCoutRealise(0);
+        tabLabels[data.getOrigin().getId()].setCoutRealise(0);
         index = 0;
         boolean foundDest = false;
         while (index<data.getGraph().size() && !foundDest){
@@ -50,16 +52,46 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             }
             //Mettre a jour le tableau en iterrant sur les arc
             for (Arc a : tabLabels[labelMin].getSommetCourant().getSuccessors()){
-                tabLabels[a.getDestination().getId()].setCoutRealise(Float.min(tabLabels[a.getDestination().getId()].getCoutRealise(),tabLabels[labelMin].getCoutRealise()+a.getLength()));
+                if((tabLabels[a.getDestination().getId()].getCoutRealise())-(tabLabels[labelMin].getCoutRealise()+a.getLength())>0){
+                    tabLabels[a.getDestination().getId()].setCoutRealise(tabLabels[labelMin].getCoutRealise()+a.getLength());
+                    tabLabels[a.getDestination().getId()].setPere(a);
+                }
             }
             index ++;
         }
+        if(!foundDest){
+            return new ShortestPathSolution(data, Status.INFEASIBLE);
+        }
+        System.out.println("index : " + index);
+        System.out.println("fin algo");
+        // Création de la liste de noeud du chemin
+        Label fils = tabLabels[data.getDestination().getId()];
+        //Label pere = tabLabels[fils.getPere().getOrigin().getId()];
+        
+        
+
+        ArrayList<Arc> bestarc = new ArrayList<>();
+
+        //bestarc.add(fils.getPere());
+        //while ((pere.getSommetCourant().getId()!= data.getOrigin().getId()) ){
+        while (fils.getPere()!= null ){
+            System.out.println("fils : "+ fils.getSommetCourant().getId());
+            bestarc.add(fils.getPere());
+            fils = tabLabels[fils.getPere().getOrigin().getId()];
+
+        }
+
+
+        Path shortPath = new Path(data.getGraph(), bestarc);
+
+
         // CONTINUER AU PROCHAIN TP CRER LISTE DE NOUED
-        Graph grapheret = new Graph(null, null, null, null)
-        ShortestPathData dataret = new ShortestPathData(grapheret, data.getOrigin(), data.getDestination(), null)
-        ShortestPathSolution solution = new ShortestPathSolution(,Status.OPTIMAL);
 
 
+        solution = new ShortestPathSolution(data,Status.OPTIMAL,shortPath);
+
+
+        System.out.println("on a finit d'ajouter wow");
         // when the algorithm terminates, return the solution that has been found
         return solution;
     }
