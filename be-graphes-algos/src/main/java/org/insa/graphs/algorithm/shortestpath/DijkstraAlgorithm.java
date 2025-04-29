@@ -3,6 +3,7 @@ package org.insa.graphs.algorithm.shortestpath;
 import java.util.ArrayList;
 
 import org.insa.graphs.algorithm.AbstractSolution.Status;
+import org.insa.graphs.algorithm.utils.BinaryHeap;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Label;
 import org.insa.graphs.model.Node;
@@ -25,37 +26,34 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         ShortestPathSolution solution = null;
 
         // TODO: implement the Dijkstra algorithm
-        Label [] tabLabels= new Label[data.getGraph().size()];
-        //Iter 0
-        int index=0;
-        for(Node N: data.getGraph().getNodes()){
-            tabLabels[index]=new Label(N,false,Integer.MAX_VALUE, null);
-            index++;
-        }
-        tabLabels[data.getOrigin().getId()].setCoutRealise(0);
-        index = 0;
+        
+        BinaryHeap<Label> tasmarque = new BinaryHeap<>();
+
+        BinaryHeap<Label> tasrecherche = new BinaryHeap<>();
+        tasrecherche.insert(new Label(data.getOrigin(), false, 0, null));
+        
         boolean foundDest = false;
-        while (index<data.getGraph().size() && !foundDest){
-            //Chercher min
-            float min=Float.MAX_VALUE;
-            int labelMin = -1;
-            for (int j=0; j<data.getGraph().size(); j++){
-                if (tabLabels[j].getCoutRealise()<min && !(tabLabels[j].getMarque())){
-                    labelMin=j;
-                    min=tabLabels[j].getCoutRealise();
-                }
-            }
-            //on ajoute le minimum comme point visité
-            tabLabels[labelMin].setMarque(true);
-            if (labelMin == data.getDestination().getId()){
+        while (!foundDest){
+            // dépile le tas
+            Label x = tasrecherche.deleteMin(); // on enleve le min du tas
+
+            //on rajoute le min au point marqué
+            x.setMarque(true); 
+            tasmarque.insert(x);
+            
+            if (x.getSommetCourant().getId() == data.getDestination().getId()){
                 foundDest = true;
             }
             //Mettre a jour le tableau en iterrant sur les arc
-            for (Arc a : tabLabels[labelMin].getSommetCourant().getSuccessors()){
-                if((tabLabels[a.getDestination().getId()].getCoutRealise())-(tabLabels[labelMin].getCoutRealise()+a.getLength())>0){
-                    tabLabels[a.getDestination().getId()].setCoutRealise(tabLabels[labelMin].getCoutRealise()+a.getLength());
-                    tabLabels[a.getDestination().getId()].setPere(a);
-                }
+            for (Arc a : x.getSommetCourant().getSuccessors()){
+                //// faire la partie ou on ajoute les labels non marqué
+
+
+
+                //if((tabLabels[a.getDestination().getId()].getCoutRealise())-(tabLabels[labelMin].getCoutRealise()+a.getLength())>0){
+                  //  tabLabels[a.getDestination().getId()].setCoutRealise(tabLabels[labelMin].getCoutRealise()+a.getLength());
+                    //tabLabels[a.getDestination().getId()].setPere(a);
+                //}
             }
             index ++;
         }

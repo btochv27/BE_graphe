@@ -43,4 +43,9 @@ public class Label {
     public void setPere(Arc pere) {
         this.pere = pere;
     }
+
+    public int compareTo(Label l){
+        return (int) ( coutRealise - l.coutRealise);
+    }
+
 }
