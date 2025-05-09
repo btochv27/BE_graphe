@@ -44,6 +44,7 @@ public class Label implements Comparable<Label>{
         this.pere = pere;
     }
 
+    @Override
     public int compareTo(Label l){
         if (coutRealise - l.coutRealise >0){
             return 1;

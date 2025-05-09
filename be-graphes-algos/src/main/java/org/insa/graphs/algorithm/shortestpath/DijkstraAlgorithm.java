@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.algorithm.utils.BinaryHeap;
+import org.insa.graphs.algorithm.utils.ElementNotFoundException;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Label;
 import org.insa.graphs.model.Path;
@@ -44,15 +45,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         boolean foundDest = false;
         
 
-        while (!foundDest){
+        while (!foundDest && !tasrecherche.isEmpty()){
 
             // dépile le tas
-            //System.out.println(tasrecherche.toStringTree());
             Label x = tasrecherche.deleteMin(); // on enleve le min du tas
             
                 //on rajoute le min au point marqué
                 x.setMarque(true); 
-                //System.out.println("marque cout :" + x.getCoutRealise());
                 notifyNodeMarked(x.getSommetCourant());
                 
                 if (x.getSommetCourant().getId() == data.getDestination().getId()){
@@ -63,19 +62,18 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 for (Arc a : x.getSommetCourant().getSuccessors()){
                     //// faire la partie ou on ajoute les labels non marqué
                     if(!(tablabel.get(a.getDestination().getId()).getMarque())){
-                        if(tablabel.get(a.getDestination().getId()).getCoutRealise() > x.getCoutRealise()+a.getLength()){
+                        double w = data.getCost(a);
+                        if(tablabel.get(a.getDestination().getId()).getCoutRealise() > x.getCoutRealise()+(float)w){
                             try {
                                 tasrecherche.remove(tablabel.get(a.getDestination().getId()));
                                 
-                            } catch (Exception e) {
-                                
+                            } catch (ElementNotFoundException e) {
+                                notifyNodeReached(a.getDestination());
                             }
                             
                             //la taille est mis à jour
-                            tablabel.get(a.getDestination().getId()).setCoutRealise(x.getCoutRealise()+a.getLength());
+                            tablabel.get(a.getDestination().getId()).setCoutRealise(x.getCoutRealise()+(float)w);
                             tablabel.get(a.getDestination().getId()).setPere(a);
-                            //System.out.println("on a ajouter a " + a.getDestination().getId() + "pere : "+x.getSommetCourant().getId());
-                            notifyNodeReached(a.getDestination());
 
                             tasrecherche.insert(tablabel.get(a.getDestination().getId()));
                         }
