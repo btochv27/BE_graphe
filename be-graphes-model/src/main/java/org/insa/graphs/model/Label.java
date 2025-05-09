@@ -1,6 +1,6 @@
 package org.insa.graphs.model;
 
-public class Label {
+public class Label implements Comparable<Label>{
     Node sommetCourant;
     boolean marque;
     float coutRealise;
@@ -45,7 +45,13 @@ public class Label {
     }
 
     public int compareTo(Label l){
-        return (int) ( coutRealise - l.coutRealise);
+        if (coutRealise - l.coutRealise >0){
+            return 1;
+        }
+        else if(coutRealise == l.coutRealise){
+            return 0;
+        }
+        return -1;
     }
 
 }

@@ -1,12 +1,12 @@
 package org.insa.graphs.algorithm.shortestpath;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.algorithm.utils.BinaryHeap;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Label;
-import org.insa.graphs.model.Node;
 import org.insa.graphs.model.Path;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
@@ -26,44 +26,72 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         ShortestPathSolution solution = null;
 
         // TODO: implement the Dijkstra algorithm
+        int nbNode = data.getGraph().getNodes().size();
         
-        BinaryHeap<Label> tasmarque = new BinaryHeap<>();
+        ArrayList<Label> tablabel = new ArrayList<>();
+        
 
-        BinaryHeap<Label> tasrecherche = new BinaryHeap<>();
-        tasrecherche.insert(new Label(data.getOrigin(), false, 0, null));
-        
+        for (int i =0; i<nbNode; i++){
+            tablabel.add(i, new Label(data.getGraph().getNodes().get(i), false, Float.MAX_VALUE, null));
+        }
+
+
+        tablabel.get(data.getOrigin().getId()).setCoutRealise(0);
+        BinaryHeap<Label> tasrecherche = new BinaryHeap<Label>();
+
+        tasrecherche.insert(tablabel.get(data.getOrigin().getId()));
+        notifyOriginProcessed(data.getOrigin());
         boolean foundDest = false;
+        
+
         while (!foundDest){
+
             // dépile le tas
+            //System.out.println(tasrecherche.toStringTree());
             Label x = tasrecherche.deleteMin(); // on enleve le min du tas
-
-            //on rajoute le min au point marqué
-            x.setMarque(true); 
-            tasmarque.insert(x);
             
-            if (x.getSommetCourant().getId() == data.getDestination().getId()){
-                foundDest = true;
-            }
-            //Mettre a jour le tableau en iterrant sur les arc
-            for (Arc a : x.getSommetCourant().getSuccessors()){
-                //// faire la partie ou on ajoute les labels non marqué
+                //on rajoute le min au point marqué
+                x.setMarque(true); 
+                //System.out.println("marque cout :" + x.getCoutRealise());
+                notifyNodeMarked(x.getSommetCourant());
+                
+                if (x.getSommetCourant().getId() == data.getDestination().getId()){
+                    foundDest = true;
+                    notifyDestinationReached(x.getSommetCourant());
+                }
+                //Mettre a jour le tableau en iterrant sur les arc
+                for (Arc a : x.getSommetCourant().getSuccessors()){
+                    //// faire la partie ou on ajoute les labels non marqué
+                    if(!(tablabel.get(a.getDestination().getId()).getMarque())){
+                        if(tablabel.get(a.getDestination().getId()).getCoutRealise() > x.getCoutRealise()+a.getLength()){
+                            try {
+                                tasrecherche.remove(tablabel.get(a.getDestination().getId()));
+                                
+                            } catch (Exception e) {
+                                
+                            }
+                            
+                            //la taille est mis à jour
+                            tablabel.get(a.getDestination().getId()).setCoutRealise(x.getCoutRealise()+a.getLength());
+                            tablabel.get(a.getDestination().getId()).setPere(a);
+                            //System.out.println("on a ajouter a " + a.getDestination().getId() + "pere : "+x.getSommetCourant().getId());
+                            notifyNodeReached(a.getDestination());
 
+                            tasrecherche.insert(tablabel.get(a.getDestination().getId()));
+                        }
 
+                    }
+                }
+            
+              
 
-                //if((tabLabels[a.getDestination().getId()].getCoutRealise())-(tabLabels[labelMin].getCoutRealise()+a.getLength())>0){
-                  //  tabLabels[a.getDestination().getId()].setCoutRealise(tabLabels[labelMin].getCoutRealise()+a.getLength());
-                    //tabLabels[a.getDestination().getId()].setPere(a);
-                //}
-            }
-            index ++;
         }
         if(!foundDest){
             return new ShortestPathSolution(data, Status.INFEASIBLE);
         }
-        System.out.println("index : " + index);
-        System.out.println("fin algo");
+        
         // Création de la liste de noeud du chemin
-        Label fils = tabLabels[data.getDestination().getId()];
+        Label fils = tablabel.get(data.getDestination().getId());
         //Label pere = tabLabels[fils.getPere().getOrigin().getId()];
         
         
@@ -72,24 +100,23 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
         //bestarc.add(fils.getPere());
         //while ((pere.getSommetCourant().getId()!= data.getOrigin().getId()) ){
-        while (fils.getPere()!= null ){
-            System.out.println("fils : "+ fils.getSommetCourant().getId());
+        while (fils.getPere()!= null){
+            //System.out.println("fils : "+ fils.getSommetCourant().getId());
             bestarc.add(fils.getPere());
-            fils = tabLabels[fils.getPere().getOrigin().getId()];
+            //System.out.println("fils :" + fils.getSommetCourant().getId() + " pere : " + fils.get)
+            fils = tablabel.get(fils.getPere().getOrigin().getId());
+            
 
         }
-
-
+        //System.out.println(bestarc.size());
+        Collections.reverse(bestarc);
         Path shortPath = new Path(data.getGraph(), bestarc);
-
-
-        // CONTINUER AU PROCHAIN TP CRER LISTE DE NOUED
 
 
         solution = new ShortestPathSolution(data,Status.OPTIMAL,shortPath);
 
 
-        System.out.println("on a finit d'ajouter wow");
+        //System.out.println("on a finit d'ajouter wow");
         // when the algorithm terminates, return the solution that has been found
         return solution;
     }
