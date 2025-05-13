@@ -18,18 +18,32 @@ public class LabelStar extends Label{
         this.estimationCout=estimationCout;
     }
 
-    public int compareTo(LabelStar l){
-        if(l.getCoutRealise()+l.GetEstimationCout()<this.coutRealise+this.estimationCout){
+    public static float getCoutAlgo(Label l){
+        float result = 0;
+        if(l instanceof LabelStar){
+            LabelStar lprime = (LabelStar) l;
+            result = lprime.getCoutRealise()+lprime.GetEstimationCout();
+        }
+        else{
+            result = l.getCoutRealise();
+        }
+        return result;
+    }
+    @Override
+    public int compareTo(Label l){
+        
+        if(getCoutAlgo(l)<getCoutAlgo(this)){
             return 1;
-        }else if (l.getCoutRealise()+l.GetEstimationCout()>this.coutRealise+this.estimationCout) {
+        }else if (getCoutAlgo(l)>getCoutAlgo(this)) {
             return -1;
-        }else if(l.getCoutRealise()<this.coutRealise){
+        }else if(getCoutAlgo((Label)l)<getCoutAlgo((Label)this)){
             return 1;
-        }else if(l.getCoutRealise()>this.coutRealise){
+        }else if(getCoutAlgo((Label)l)>getCoutAlgo((Label)this)){
             return -1;
         }else{
             return 0;
         }
 
     }
+
 }
