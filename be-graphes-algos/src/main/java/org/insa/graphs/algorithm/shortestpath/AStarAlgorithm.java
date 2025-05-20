@@ -45,7 +45,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         //on effectue l'algo pour trouver la destination
         boolean foundDest = findDestination(tasrecherche, data, tablabel);
         
-        if(!foundDest){
+        if(!foundDest || tablabel.get(data.getDestination().getId()).getPere() == null){
             return new ShortestPathSolution(data, Status.INFEASIBLE);
         }
         

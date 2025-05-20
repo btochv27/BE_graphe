@@ -134,7 +134,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
         boolean foundDest = findDestination(tasrecherche,data,tablabel);
            
-         if(!foundDest){
+         if(!foundDest || tablabel.get(data.getDestination().getId()).getPere() == null){ //cas ou les point ne sont pas connexe ou si il n'y a pas de chemin (debut = fin)
             return new ShortestPathSolution(data, Status.INFEASIBLE);
         }
 
