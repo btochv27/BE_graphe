@@ -11,9 +11,9 @@ public class testGene {
     public static void main(String[] args) {
         testDijkstra td = new testDijkstra();
 
-        ArcInspector arcInsp = new MyArcInsp();
+        ArcInspector arcInsp = new MyArcInsp(Mode.LENGTH);
 
-        ArcInspector arcInspT = new ArcInspTime();
+        ArcInspector arcInspT = new MyArcInsp(Mode.TIME);
 
 
         //test basique sur la map carré

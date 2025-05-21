@@ -6,6 +6,12 @@ import org.insa.graphs.model.Arc;
 
 public class MyArcInsp implements ArcInspector{
 
+    private final Mode mode;
+    
+    public MyArcInsp(Mode mode){
+        this.mode = mode;
+    }
+
     @Override
     public boolean isAllowed(Arc arc) {
         return true;
@@ -13,7 +19,12 @@ public class MyArcInsp implements ArcInspector{
 
     @Override
     public double getCost(Arc arc) {
-        return arc.getLength();
+        if(mode == Mode.LENGTH){
+            return arc.getLength();
+        }else{
+            return arc.getMinimumTravelTime();
+        }
+        
     }
 
     @Override
@@ -23,7 +34,7 @@ public class MyArcInsp implements ArcInspector{
 
     @Override
     public Mode getMode() {
-        return Mode.LENGTH;
+        return mode;
     }
     
 }
