@@ -14,8 +14,24 @@ import org.insa.graphs.model.Path;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
+    private int idNodeStart;
+    private int idNodeEnd;
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
+        this.idNodeStart = data.getOrigin().getId();
+        this.idNodeEnd = data.getDestination().getId();
+    }
+
+    public DijkstraAlgorithm(ShortestPathData data, int nodeStart) {
+        super(data);
+        this.idNodeStart = nodeStart;
+        this.idNodeEnd = data.getDestination().getId();
+    }
+
+    public DijkstraAlgorithm(ShortestPathData data, int idNodeStart2, int idNodeEnd) {
+        super(data);
+        this.idNodeStart = idNodeStart2;
+        this.idNodeEnd = idNodeEnd;
     }
 
     protected void Iteration(Label x,ArrayList<Label> tablabel,BinaryHeap<Label> tasrecherche,ShortestPathData data){
@@ -37,7 +53,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                         //verification si on est dans la partie Astar
                         if(this instanceof AStarAlgorithm){
 
-                            org.insa.graphs.model.Point p_dest = data.getDestination().getPoint();
+                            org.insa.graphs.model.Point p_dest = tablabel.get(idNodeEnd).getSommetCourant().getPoint();
                             org.insa.graphs.model.Point p_cur = tablabel.get(a.getDestination().getId()).getSommetCourant().getPoint();
                             float estimate_cost = (float) org.insa.graphs.model.Point.distance(p_cur,p_dest);
                             LabelStar labelmodif = (LabelStar)tablabel.get(a.getDestination().getId());
@@ -48,6 +64,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                             labelmodif.SetEstimationCout(estimate_cost);
                             tablabel.set(a.getDestination().getId(), labelmodif);
                         }
+                        //System.out.println("on insere !" + tasrecherche.size());
                         tasrecherche.insert(tablabel.get(a.getDestination().getId()));
                     }
 
@@ -55,10 +72,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             }
     }
 
-    protected ShortestPathSolution CreateSolution(ShortestPathData data, ArrayList<Label> tablabel){
+    protected ShortestPathSolution CreateSolution(ShortestPathData data, ArrayList<Label> tablabel,int idend){
              
         // Création de la liste de noeud du chemin
-        Label fils = tablabel.get(data.getDestination().getId());
+        Label fils = tablabel.get(idend);
         //Label pere = tabLabels[fils.getPere().getOrigin().getId()];
         
         
@@ -85,22 +102,32 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
     protected boolean findDestination(BinaryHeap<Label> tasrecherche, ShortestPathData data, ArrayList<Label> tablabel){
         boolean result = false;
+        
         while (!result && !tasrecherche.isEmpty()){
-
+            
+            //System.out.println("On cherche");
             // dépile le tas
             Label x = tasrecherche.deleteMin(); // on enleve le min du tas
             
+            //System.out.println("on retire !" + tasrecherche.size() + " node :" + x.getSommetCourant().getId());
             //on rajoute le min au point marqué
             x.setMarque(true); 
             notifyNodeMarked(x.getSommetCourant());
             
-            if (x.getSommetCourant().getId() == data.getDestination().getId()){
-                result = true;
-                notifyDestinationReached(x.getSommetCourant());
-            }
+            result = isFinished(x,data);
+            
             //Mettre a jour le tableau en iterrant sur les arc
             Iteration(x, tablabel, tasrecherche,data);
+            
+        }
+        return result;
+    }
 
+    protected boolean isFinished(Label x, ShortestPathData data) {
+        boolean result =false;
+        if (x.getSommetCourant().getId() == idNodeEnd){
+            result = true;
+            notifyDestinationReached(x.getSommetCourant());
         }
         return result;
     }
@@ -126,19 +153,24 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         }
 
 
-        tablabel.get(data.getOrigin().getId()).setCoutRealise(0);
+        tablabel.get(idNodeStart).setCoutRealise(0);
         BinaryHeap<Label> tasrecherche = new BinaryHeap<Label>();
 
-        tasrecherche.insert(tablabel.get(data.getOrigin().getId()));
-        notifyOriginProcessed(data.getOrigin());
+        tasrecherche.insert(tablabel.get(idNodeStart));
+        notifyOriginProcessed(tablabel.get(idNodeStart).getSommetCourant());
 
         boolean foundDest = findDestination(tasrecherche,data,tablabel);
-           
-         if(!foundDest || tablabel.get(data.getDestination().getId()).getPere() == null){ //cas ou les point ne sont pas connexe ou si il n'y a pas de chemin (debut = fin)
+        
+        if (this instanceof DijkDistAlgo){
+            return CreateSolution(data,tablabel,idNodeEnd);
+        }
+        if(!foundDest || (tablabel.get(idNodeEnd).getPere() == null)){ //cas ou les point ne sont pas connexe ou si il n'y a pas de chemin (debut = fin)
+            
             return new ShortestPathSolution(data, Status.INFEASIBLE);
+            
         }
 
-        solution = CreateSolution(data,tablabel);
+        solution = CreateSolution(data,tablabel,idNodeEnd);
         //System.out.println("on a finit d'ajouter wow");
         // when the algorithm terminates, return the solution that has been found
         return solution;

@@ -49,7 +49,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
             return new ShortestPathSolution(data, Status.INFEASIBLE);
         }
         
-        solution = CreateSolution(data, tablabel);
+        solution = CreateSolution(data, tablabel,data.getDestination().getId());
         return solution;
     }
 }

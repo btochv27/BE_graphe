@@ -1,6 +1,25 @@
 package org.insa.graphs.gui.simple;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+
+import org.insa.graphs.algorithm.AbstractInputData.Mode;
 import org.insa.graphs.algorithm.ArcInspector;
+
+import org.insa.graphs.algorithm.shortestpath.ParcourMara;
+import org.insa.graphs.algorithm.shortestpath.DijkDistAlgo;
+import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
+import org.insa.graphs.gui.drawing.Drawing;
+import org.insa.graphs.model.Graph;
+import org.insa.graphs.model.Path;
+import org.insa.graphs.model.io.BinaryGraphReader;
+import org.insa.graphs.model.io.BinaryPathReader;
+import org.insa.graphs.model.io.GraphReader;
+import org.insa.graphs.model.io.PathReader;
 
 
 
@@ -8,14 +27,14 @@ import org.insa.graphs.algorithm.ArcInspector;
 
 
 public class testGene {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         testDijkstra td = new testDijkstra();
 
         ArcInspector arcInsp = new MyArcInsp(Mode.LENGTH);
 
         ArcInspector arcInspT = new MyArcInsp(Mode.TIME);
 
-
+        /*
         //test basique sur la map carré
         td.dotest("/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre.mapgr",10,15, arcInsp);
         //pareil avec le temps
@@ -51,6 +70,37 @@ public class testGene {
         //test chemin nul (debut = fin)
         ta.dotest("/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bordeaux.mapgr",1,1, arcInspT);
 
-    
+
+        */
+
+        //TEST DU MARATHON
+        
+        // create the drawing
+        final Drawing drawing = Launch.createDrawing();
+
+        final Graph graph;
+        final Path path;
+
+        // create a graph reader
+        try (final GraphReader reader = new BinaryGraphReader(new DataInputStream(
+                new BufferedInputStream(new FileInputStream("/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr"))))) {
+
+            graph = reader.read();
+        }
+
+        drawing.drawGraph(graph);
+
+        
+
+        ShortestPathData data = new ShortestPathData(graph,graph.getNodes().get(212168),graph.getNodes().get(101),arcInsp);
+        
+
+        ParcourMara parcour = new ParcourMara(data);
+
+        path = parcour.createPath();
+
+
+
+        drawing.drawPath(path);
     }
 }

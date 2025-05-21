@@ -39,6 +39,7 @@ public class ShortestPathData extends AbstractInputData {
     public Node getDestination() {
         return destination;
     }
+    
 
     @Override
     public String toString() {
