@@ -6,20 +6,13 @@ import java.io.FileInputStream;
 
 import org.insa.graphs.algorithm.AbstractInputData.Mode;
 import org.insa.graphs.algorithm.ArcInspector;
-
 import org.insa.graphs.algorithm.shortestpath.ParcourMara;
-import org.insa.graphs.algorithm.shortestpath.DijkDistAlgo;
-import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
-import org.insa.graphs.algorithm.shortestpath.ShortestPathAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
-import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
 import org.insa.graphs.gui.drawing.Drawing;
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Path;
 import org.insa.graphs.model.io.BinaryGraphReader;
-import org.insa.graphs.model.io.BinaryPathReader;
 import org.insa.graphs.model.io.GraphReader;
-import org.insa.graphs.model.io.PathReader;
 
 
 
@@ -94,8 +87,8 @@ public class testGene {
 
         ShortestPathData data = new ShortestPathData(graph,graph.getNodes().get(212168),graph.getNodes().get(101),arcInsp);
         
-
-        ParcourMara parcour = new ParcourMara(data);
+        //Point qui ont été verifier et marche : 212168 / 100 / 1
+        ParcourMara parcour = new ParcourMara(data); //on peut indiquer une distance afin de réaliser un parcour d'une distance autre que celle d'un marathon.
 
         path = parcour.createPath();
 

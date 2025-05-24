@@ -1,6 +1,5 @@
 package org.insa.graphs.algorithm.shortestpath;
 
-import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Path;
 
 public class ParcourMara {
@@ -76,7 +75,7 @@ public class ParcourMara {
             }
         }
 
-        System.out.println(resultPath.getLength());
+        System.out.println("Distance final du parcours :" + resultPath.getLength());
         return resultPath;
     }
 
